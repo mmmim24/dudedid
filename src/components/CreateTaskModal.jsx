@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { TaskStore } from '../store/taskStore';
 
 const CreateTaskModal = ({ isOpen, onClose }) => {
-    const { tasks, updateValues } = React.useContext(TaskStore);
     if (!isOpen) return null;
     const [task, setTask] = React.useState({
         title: null,
         description: null
     });
+    const { state, dispatch } = React.useContext(TaskStore);
     const [isDisabled, setIsDisabled] = React.useState(true);
 
     const handleChange = (e) => {
@@ -23,9 +23,8 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                 description: task.description,
                 status: 'started',
             }
-            updateValues(newTask);
+            dispatch({ type: 'ADD_TASK', payload: newTask });
         }
-        console.log('Task created');
         onClose();
     }
 
@@ -36,8 +35,6 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
             setIsDisabled(true);
         }
     }, [task]);
-
-    console.log(task);
 
     return ReactDOM.createPortal(
         (
@@ -54,15 +51,16 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                         name='description'
                         placeholder='Add description'
                         className='w-[80%] h-[100px] bg-[#1e1e1e] rounded-lg text-white p-2 mb-4'
-                        resize={false}
                         onChange={handleChange}
                     />
-                    <button
-                        className='bg-white text-[#242424] rounded-2xl py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'
-                        disabled={isDisabled}
-                        onClick={handleClick}
-                    >Save
-                    </button>
+                    <div className='flex items-center justify-end w-[80%]'>
+                        <button
+                            className='bg-white w-[75px] text-[#242424] rounded-4xl py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'
+                            disabled={isDisabled}
+                            onClick={handleClick}
+                        >Save
+                        </button>
+                    </div>
                 </div>
 
             </div >
