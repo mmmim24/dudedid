@@ -5,10 +5,10 @@ import WebViw from './WebViw';
 const Home = () => {
     return (
         <>
-            <div className='hidden md:block'>
+            <div className='hidden lg:block'>
                 <WebViw />
             </div>
-            <div className='md:hidden'>
+            <div className='lg:hidden'>
                 <MobileView />
             </div>
         </>

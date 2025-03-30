@@ -17,16 +17,22 @@ export const TaskProvider = ({ children }) => {
         switch (action.type) {
             case 'ADD_TASK':
                 return [...state, action.payload];
+            case 'CLEAR_TASK':
+                return state.filter(task => task.id !== action.payload.id);
+            case 'CLEAR_ALL':
+                return state.filter(task => task.status !== action.payload);
+            case 'VIEW_TASK':
+                return state.filter(task => task.status === action.payload);
             case 'EDIT_TASK':
                 return state.map(task => {
-                    if (task.title === action.payload.title) {
+                    if (task.id === action.payload.id) {
                         return { ...task, title: action.payload.newTitle };
                     }
                     return task;
                 });
             case 'UPDATE_TASK':
                 return state.map(task => {
-                    if (task.title === action.payload.title) {
+                    if (task.id === action.payload.id) {
                         return { ...task, status: action.payload.status };
                     }
                     return task;

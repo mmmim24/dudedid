@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useId } from 'react'
 import ReactDOM from 'react-dom';
 import { TaskStore } from '../store/taskStore';
 
@@ -14,11 +14,12 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
     const handleChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value });
     }
-
     const handleClick = (e) => {
         e.preventDefault();
         if (task.title !== null && task.description !== null) {
+            const id = Date.now();
             const newTask = {
+                id: id,
                 title: task.title,
                 description: task.description,
                 status: 'started',
@@ -38,8 +39,8 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
 
     return ReactDOM.createPortal(
         (
-            <div className='w-full h-full fixed bg-[rgba(0,0,0,0.5)] flex items-center justify-center'>
-                <div className='w-[300px] h-[300px] bg-[#242424] rounded-lg shadow-lg flex flex-col items-center justify-center'>
+            <div className='w-full h-full fixed bg-[rgba(0,0,0,0.7)] flex items-center justify-center' onClick={onClose}>
+                <div className='w-[300px] h-[300px] bg-[#242424] rounded-lg shadow-lg flex flex-col items-center justify-center' onClick={(e) => e.stopPropagation()}>
                     <input
                         name='title'
                         type="text"
@@ -55,7 +56,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                     />
                     <div className='flex items-center justify-end w-[80%]'>
                         <button
-                            className='bg-white w-[75px] text-[#242424] rounded-4xl py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'
+                            className={isDisabled ? 'bg-[rgba(255,255,255,0.5)] w-[75px] text-[#242424] rounded-4xl py-2 px-4' : 'bg-white w-[75px] text-[#242424] rounded-4xl py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
                             disabled={isDisabled}
                             onClick={handleClick}
                         >Save

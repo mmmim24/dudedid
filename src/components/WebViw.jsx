@@ -16,22 +16,36 @@ const WebViw = () => {
         setFinished(finishedTasks)
     }, [state]);
 
+    const clearTask = (status) => {
+        dispatch({ type: 'CLEAR_ALL', payload: status });
+    }
 
 
     return (
         <>
-            <div className='m-4 grid grid-cols-3 gap-4 h-[60vh]'>
+            <div className='m-10 grid grid-cols-3 gap-10 h-[60vh]'>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
                         started
                     </h1>
                     {
-                        started.length === 0 ? <p className='text-center text-gray-500'>No tasks started</p> :
-                            started.map((t, index) => {
-                                return (
-                                    <SingleTask key={index} task={t} />
-                                )
-                            })
+                        started.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks started</p>
+                            : <>
+                                <button
+                                    onClick={() => clearTask('started')}
+                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                >
+                                    Clear All
+                                </button>
+                                {
+                                    started.map((t) => {
+                                        return (
+                                            <SingleTask key={t.id} task={t} />
+                                        )
+                                    })
+                                }
+                            </>
                     }
                 </div>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
@@ -39,12 +53,23 @@ const WebViw = () => {
                         on-going
                     </h1>
                     {
-                        onGoing.length === 0 ? <p className='text-center text-gray-500'>No tasks in progress</p> :
-                            onGoing.map((t, index) => {
-                                return (
-                                    <SingleTask key={index} task={t} />
-                                )
-                            })
+                        onGoing.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks in progress</p>
+                            : <>
+                                <button
+                                    onClick={() => clearTask('on-going')}
+                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                >
+                                    Clear All
+                                </button>
+                                {
+                                    onGoing.map((t) => {
+                                        return (
+                                            <SingleTask key={t.id} task={t} />
+                                        )
+                                    })
+                                }
+                            </>
                     }
                 </div>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
@@ -52,12 +77,23 @@ const WebViw = () => {
                         finished
                     </h1>
                     {
-                        finished.length === 0 ? <p className='text-center text-gray-500'>No tasks finished</p> :
-                            finished.map((t, index) => {
-                                return (
-                                    <SingleTask key={index} task={t} />
-                                )
-                            })
+                        finished.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks finished</p>
+                            : <>
+                                <button
+                                    onClick={() => clearTask('finished')}
+                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                >
+                                    Clear All
+                                </button>
+                                {
+                                    finished.map((t) => {
+                                        return (
+                                            <SingleTask key={t.id} task={t} />
+                                        )
+                                    })
+                                }
+                            </>
                     }
                 </div>
             </div>
