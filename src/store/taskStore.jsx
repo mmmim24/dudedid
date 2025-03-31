@@ -21,8 +21,6 @@ export const TaskProvider = ({ children }) => {
                 return state.filter(task => task.id !== action.payload.id);
             case 'CLEAR_ALL':
                 return state.filter(task => task.status !== action.payload);
-            case 'VIEW_TASK':
-                return state.filter(task => task.status === action.payload);
             case 'EDIT_TASK':
                 return state.map(task => {
                     if (task.id === action.payload.id) {
