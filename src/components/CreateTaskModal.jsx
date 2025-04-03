@@ -11,6 +11,8 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
     const { state, dispatch } = React.useContext(TaskStore);
     const [isDisabled, setIsDisabled] = React.useState(true);
 
+    const focusRef = React.useRef(null);
+
     const handleChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value });
     }
@@ -33,6 +35,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
         if (task.title && task.description) {
             setIsDisabled(false);
         } else {
+            focusRef.current.focus();
             setIsDisabled(true);
         }
     }, [task]);
@@ -42,6 +45,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
             <div className='w-full h-full fixed bg-[rgba(0,0,0,0.7)] flex items-center justify-center' onClick={onClose}>
                 <div className='w-[300px] h-[300px] bg-[#242424] rounded-lg shadow-lg flex flex-col items-center justify-center' onClick={(e) => e.stopPropagation()}>
                     <input
+                        ref={focusRef}
                         name='title'
                         type="text"
                         placeholder='Add title'

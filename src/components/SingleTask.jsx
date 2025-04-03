@@ -25,6 +25,7 @@ const SingleTask = ({ task }) => {
                         Edit
                     </button>
                     <select
+                        name='status'
                         value={task.status}
                         onChange={(e) => handleChange(e, task)}
                         className='bg-gray-700 text-gray-300 p-2 rounded-lg'

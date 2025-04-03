@@ -6,13 +6,7 @@ const status = {
 };
 export const TaskStore = React.createContext()
 export const TaskProvider = ({ children }) => {
-    const tasks = [
-        {
-            title: null,
-            description: null,
-            status: null
-        }
-    ]
+    const tasks = [];
     const reducer = (state, action) => {
         switch (action.type) {
             case 'ADD_TASK':
