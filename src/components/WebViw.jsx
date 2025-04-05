@@ -5,15 +5,15 @@ import SingleTask from './SingleTask'
 const WebViw = () => {
     const { state, dispatch } = React.useContext(TaskStore)
     const [started, setStarted] = React.useState([])
-    const [onGoing, setOnGoing] = React.useState([])
-    const [finished, setFinished] = React.useState([])
+    const [InProgress, setInProgress] = React.useState([])
+    const [Completed, setCompleted] = React.useState([])
     React.useEffect(() => {
         const startedTasks = state.filter(task => task.status === 'started')
-        const onGoingTasks = state.filter(task => task.status === 'on-going')
-        const finishedTasks = state.filter(task => task.status === 'finished')
+        const InProgressTasks = state.filter(task => task.status === 'In Progress')
+        const CompletedTasks = state.filter(task => task.status === 'Completed')
         setStarted(startedTasks)
-        setOnGoing(onGoingTasks)
-        setFinished(finishedTasks)
+        setInProgress(InProgressTasks)
+        setCompleted(CompletedTasks)
     }, [state]);
 
     const clearTask = (status) => {
@@ -50,20 +50,20 @@ const WebViw = () => {
                 </div>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
-                        on-going
+                        In Progress
                     </h1>
                     {
-                        onGoing.length === 0
+                        InProgress.length === 0
                             ? <p className='text-center text-gray-500'>No tasks in progress</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('on-going')}
+                                    onClick={() => clearTask('In Progress')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
-                                    onGoing.map((t) => {
+                                    InProgress.map((t) => {
                                         return (
                                             <SingleTask key={t.id} task={t} />
                                         )
@@ -74,20 +74,20 @@ const WebViw = () => {
                 </div>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
-                        finished
+                        Completed
                     </h1>
                     {
-                        finished.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks finished</p>
+                        Completed.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks Completed</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('finished')}
+                                    onClick={() => clearTask('Completed')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
-                                    finished.map((t) => {
+                                    Completed.map((t) => {
                                         return (
                                             <SingleTask key={t.id} task={t} />
                                         )

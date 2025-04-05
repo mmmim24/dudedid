@@ -18,8 +18,8 @@ const MobileView = () => {
 
     const clearAllTask = () => {
         dispatch({ type: 'CLEAR_ALL', payload: 'started' });
-        dispatch({ type: 'CLEAR_ALL', payload: 'on-going' });
-        dispatch({ type: 'CLEAR_ALL', payload: 'finished' });
+        dispatch({ type: 'CLEAR_ALL', payload: 'In Progress' });
+        dispatch({ type: 'CLEAR_ALL', payload: 'Completed' });
     }
 
     return (
@@ -33,15 +33,15 @@ const MobileView = () => {
                 </button>
                 <button
                     className='focus:text-white active:text-white uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('on-going')}
+                    onClick={() => handleClick('In Progress')}
                 >
                     On Going
                 </button>
                 <button
                     className='focus:text-white uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('finished')}
+                    onClick={() => handleClick('Completed')}
                 >
-                    Finished
+                    Completed
                 </button>
             </div>
             {

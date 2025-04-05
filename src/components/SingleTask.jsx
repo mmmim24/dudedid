@@ -1,7 +1,16 @@
 import React from 'react'
 import { TaskStore } from '../store/taskStore';
+import EditTaskModal from './EditTaskModal';
 
 const SingleTask = ({ task }) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
+    };
+    const closeModal = () => {
+        setIsOpen(false);
+    };
+
     const { state, dispatch } = React.useContext(TaskStore);
     const handleChange = (event, payload) => {
         const newStatus = event.target.value;
@@ -13,13 +22,13 @@ const SingleTask = ({ task }) => {
     }
     // console.log(state)
     return (
-        <>
+        <div>
             <div className='h-[200px] bg-gray-900 m-2 p-4 rounded-lg'>
                 <h2 className='font-bold'>{task.title}</h2>
                 <p className='h-[100px] overflow-clip'>{task.description}</p>
                 <div className='flex justify-between items-center gap-2 mt-2 font-semibold'>
                     <button
-                        onClick={() => { }}
+                        onClick={() => toggleModal()}
                         className='bg-white w-[75px] text-[#242424] rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'
                     >
                         Edit
@@ -31,8 +40,8 @@ const SingleTask = ({ task }) => {
                         className='bg-gray-700 text-gray-300 p-2 rounded-lg'
                     >
                         <option value="started">Started</option>
-                        <option value="on-going">On-going</option>
-                        <option value="finished">Finished</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
                     </select>
                     <button
                         onClick={() => clearTask()}
@@ -42,7 +51,8 @@ const SingleTask = ({ task }) => {
                     </button>
                 </div>
             </div>
-        </>
+            <EditTaskModal isOpen={isOpen} onClose={closeModal} task={task} />
+        </div>
     )
 }
 

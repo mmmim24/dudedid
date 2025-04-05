@@ -1,12 +1,32 @@
 import React from "react";
-const status = {
-    todo: "started",
-    running: "on-going",
-    completed: "finished"
-};
 export const TaskStore = React.createContext()
 export const TaskProvider = ({ children }) => {
-    const tasks = [];
+    const tasks = [
+        // {
+        //     "id": 1,
+        //     "title": "Devops Roadmap",
+        //     "description": "Operating Systems, Networking and Cloud Computing",
+        //     "status": "In Progress"
+        // },
+        // {
+        //     "id": 2,
+        //     "title": "Web Development",
+        //     "description": "HTML, CSS, JavaScript, React, Node.js",
+        //     "status": "Completed"
+        // },
+        // {
+        //     "id": 3,
+        //     "title": "Data Science",
+        //     "description": "Python, R, SQL, Machine Learning",
+        //     "status": "In Progress"
+        // },
+        // {
+        //     "id": 4,
+        //     "title": "Mobile Development",
+        //     "description": "Flutter, React Native, Swift, Kotlin",
+        //     "status": "started"
+        // }
+    ];
     const reducer = (state, action) => {
         switch (action.type) {
             case 'ADD_TASK':
@@ -18,7 +38,8 @@ export const TaskProvider = ({ children }) => {
             case 'EDIT_TASK':
                 return state.map(task => {
                     if (task.id === action.payload.id) {
-                        return { ...task, title: action.payload.newTitle };
+                        const updatedTask = { title: action.payload.title, description: action.payload.description, status: action.payload.status };
+                        return { ...task, ...updatedTask };
                     }
                     return task;
                 });
