@@ -38,7 +38,11 @@ export const TaskProvider = ({ children }) => {
             case 'EDIT_TASK':
                 return state.map(task => {
                     if (task.id === action.payload.id) {
-                        const updatedTask = { title: action.payload.title, description: action.payload.description, status: action.payload.status };
+                        const updatedTask = {
+                            title: action.payload.title,
+                            description: action.payload.description,
+                            status: action.payload.status
+                        };
                         return { ...task, ...updatedTask };
                     }
                     return task;

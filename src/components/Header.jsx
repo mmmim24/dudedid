@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '/tasks.svg';
-import Sidebar from './Sidebar';
 import CreateTaskModal from './CreateTaskModal';
 
 const Header = () => {
@@ -15,7 +14,6 @@ const Header = () => {
     return (
         <>
             <div>
-                <Sidebar />
                 <div className='flex items-center justify-around gap-4 p-4 border-l-4 border-r-4'>
                     <img src={logo} alt="Logo" className="h-10" />
                     <h1 className="font-bold text-md md:text-lg lg:text-xl">DUDEDID- task tracker</h1>
