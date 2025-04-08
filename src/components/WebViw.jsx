@@ -1,23 +1,22 @@
 import React from 'react'
-import { TaskStore } from '../store/taskStore'
 import SingleTask from './SingleTask'
 
-const WebViw = () => {
-    const { state, dispatch } = React.useContext(TaskStore)
+const WebViw = ({ ctx }) => {
+    const { state, dispatch } = ctx;
+    const [Pending, setPending] = React.useState([])
     const [started, setStarted] = React.useState([])
-    const [InProgress, setInProgress] = React.useState([])
     const [Completed, setCompleted] = React.useState([])
     React.useEffect(() => {
-        const startedTasks = state.filter(task => task.status === 'started')
-        const InProgressTasks = state.filter(task => task.status === 'In Progress')
+        const PendingTasks = state.filter(task => task.status === 'Pending')
+        const startedTasks = state.filter(task => task.status === 'Started')
         const CompletedTasks = state.filter(task => task.status === 'Completed')
+        setPending(PendingTasks)
         setStarted(startedTasks)
-        setInProgress(InProgressTasks)
         setCompleted(CompletedTasks)
     }, [state]);
 
     const clearTask = (status) => {
-        dispatch({ type: 'CLEAR_ALL', payload: status });
+        dispatch({ type: 'DELETE_ALL', payload: status });
     }
 
 
@@ -26,20 +25,20 @@ const WebViw = () => {
             <div className='m-10 grid grid-cols-3 gap-10 h-[60vh]'>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
-                        started
+                        Pending
                     </h1>
                     {
-                        started.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks started</p>
+                        Pending.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks Pending</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('started')}
+                                    onClick={() => clearTask('Pending')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
-                                    started.map((t) => {
+                                    Pending.map((t) => {
                                         return (
                                             <SingleTask key={t.id} task={t} />
                                         )
@@ -50,20 +49,20 @@ const WebViw = () => {
                 </div>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
-                        In Progress
+                        Started
                     </h1>
                     {
-                        InProgress.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks in progress</p>
+                        started.length === 0
+                            ? <p className='text-center text-gray-500'>No tasks Started</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('In Progress')}
+                                    onClick={() => clearTask('Started')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
-                                    InProgress.map((t) => {
+                                    started.map((t) => {
                                         return (
                                             <SingleTask key={t.id} task={t} />
                                         )

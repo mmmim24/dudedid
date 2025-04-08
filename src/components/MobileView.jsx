@@ -1,23 +1,21 @@
 import React from 'react'
 import SingleTask from './SingleTask'
-import { TaskStore } from '../store/taskStore'
 
-const MobileView = () => {
+const MobileView = ({ ctx }) => {
 
     const [task, setTask] = React.useState([]);
-    const { state, dispatch } = React.useContext(TaskStore);
-    const [currentStatus, setCurrentStatus] = React.useState('started');
+    const { state, dispatch } = ctx;
+    const [currentStatus, setCurrentStatus] = React.useState('Pending');
 
     const handleClick = (status) => {
         setCurrentStatus(status);
     }
-
     React.useEffect(() => {
         setTask(state.filter(t => t.status === currentStatus));
     }, [currentStatus, state]);
 
     const clearAllTask = (currentStatus) => {
-        dispatch({ type: 'CLEAR_ALL', payload: currentStatus });
+        dispatch({ type: 'DELETE_ALL', payload: currentStatus });
     }
 
     return (
@@ -25,15 +23,15 @@ const MobileView = () => {
             <div className='my-6 flex gap-6 items-center justify-around'>
                 <button
                     className='focus:text-black dark:focus:text-white uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('started')}
+                    onClick={() => handleClick('Pending')}
                 >
-                    Started
+                    Pending
                 </button>
                 <button
                     className='focus:text-black dark:focus:text-white uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('In Progress')}
+                    onClick={() => handleClick('Started')}
                 >
-                    In Progress
+                    Started
                 </button>
                 <button
                     className='focus:text-black dark:focus:text-white uppercase my-4 text-center font-bold text-lg text-gray-400'

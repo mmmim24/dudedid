@@ -11,21 +11,28 @@ const SingleTask = ({ task }) => {
         setIsOpen(false);
     };
 
-    const { state, dispatch } = React.useContext(TaskStore);
+    const { dispatch } = React.useContext(TaskStore);
     const handleChange = (event, payload) => {
-        const newStatus = event.target.value;
-        const updatedTask = { ...payload, status: newStatus };
+        const newPriority = event.target.value;
+        const updatedTask = { ...payload, priority: newPriority };
         dispatch({ type: 'UPDATE_TASK', payload: updatedTask });
     }
     const clearTask = () => {
-        dispatch({ type: 'CLEAR_TASK', payload: task });
+        dispatch({ type: 'DELETE_TASK', payload: task });
     }
-    // console.log(state)
+    // console.log(task.id)
+    const className =
+        task.priority === 'High'
+            ? 'border-red-500'
+            : (task.priority === 'Medium'
+                ? 'border-yellow-500'
+                : 'border-green-500'
+            );
+
     return (
         <div>
-            <div className='h-[200px] bg-gray-400 dark:bg-gray-900 m-2 p-4 rounded-lg'>
+            <div className={className + ' border-l-2 h-[100px] bg-gray-400 dark:bg-gray-900 m-2 p-4 rounded-lg'}>
                 <h2 className='font-bold text-gray-900 dark:text-inherit'>{task.title}</h2>
-                <p className='h-[100px] overflow-clip text-gray-900 dark:text-inherit'>{task.description}</p>
                 <div className='flex justify-between items-center gap-2 mt-2 font-semibold'>
                     <button
                         onClick={() => toggleModal()}
@@ -34,14 +41,14 @@ const SingleTask = ({ task }) => {
                         Edit
                     </button>
                     <select
-                        name='status'
-                        value={task.status}
+                        name='priority'
+                        value={task.priority}
                         onChange={(e) => handleChange(e, task)}
-                        className='dark:bg-gray-700 bg-gray-900 text-white dark:text-gray-300 p-2 rounded-lg py-1.5 px-2'
+                        className='dark:bg-gray-700 bg-gray-900 text-white dark:text-gray-300 rounded-lg outline-none py-1.5 px-2'
                     >
-                        <option value="started">Started</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
                     </select>
                     <button
                         onClick={() => clearTask()}

@@ -6,7 +6,8 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     const [task, setTask] = React.useState({
         title: null,
-        description: null
+        description: null,
+        priority: null,
     });
     const { state, dispatch } = React.useContext(TaskStore);
     const [isDisabled, setIsDisabled] = React.useState(true);
@@ -24,9 +25,10 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                 id: id,
                 title: task.title,
                 description: task.description,
-                status: 'started',
+                status: 'Pending',
+                priority: task.priority
             }
-            dispatch({ type: 'ADD_TASK', payload: newTask });
+            dispatch({ type: 'CREATE_TASK', payload: newTask });
         }
         onClose();
     }
@@ -57,30 +59,19 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                         className='w-[80%] h-[100px] bg-gray-400 dark:bg-[#1e1e1e] rounded-lg p-2 mb-4'
                         onChange={handleChange}
                     />
-                    {/* date will be implemented lateer */}
-                    {/* <div className='flex flex-col items-left justify-left w-[80%]'>
-                        <label
-                            className='m-2 text-gray-900 dark:text-inherit font-semibold'
-                            htmlFor='status'
-                        >Due Date
-                        </label>
-                        <input
-                            name='date'
-                            min={new Date().toISOString().split('T')[0]}
-                            placeholder='Add date'
-                            className='h-[40px] bg-gray-400 dark:bg-[#1e1e1e] rounded-lg p-2 mb-4'
-                            type='date'
-                        />
-                        <input
-                            name='time'
-                            placeholder='Add time'
-                            className='h-[40px] bg-gray-400 dark:bg-[#1e1e1e] rounded-lg p-2 mb-4'
-                            type='time'
-                        />
-                    </div> */}
-                    <div className='flex items-center justify-end w-[80%]'>
+                    <div className='flex items-center justify-between w-[80%]'>
+                        <label>Priority</label>
+                        <select
+                            name='priority'
+                            onChange={handleChange}
+                            className='bg-gray-300 dark:bg-gray-700 dark:text-gray-300 p-2 rounded-lg outline-none'
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
                         <button
-                            className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] w-[75px] text-gray-200 dark:text-[#242424] rounded-4xl py-2 px-4' : 'bg-gray-900 dark:bg-white w-[75px] text-white dark:text-[#242424] rounded-4xl py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
+                            className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] text-gray-200 dark:text-[#242424] rounded-lg py-2 px-4' : 'bg-gray-900 dark:bg-white text-white dark:text-[#242424] rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
                             disabled={isDisabled}
                             onClick={handleClick}
                         >Save

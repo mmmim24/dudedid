@@ -5,7 +5,7 @@ A simple and intuitive task management application built with React and Tailwind
 ## Features
 
 -   **Create, edit, and delete tasks:** Easily manage your tasks with full CRUD functionality.
--   **Task Status Tracking:** Track tasks in "Started", "In Progress", and "Completed" categories.
+-   **Task Status Tracking:** Track tasks in "Pending", "Started", and "Completed" categories.
 -   **Responsive Design:** Separate views for mobile and desktop using Tailwind CSS's responsive utilities.
 -   **React Context API:** Utilizes React Context API for efficient state management.
 -   **Clear All Tasks:** Option to clear all tasks within a specific status category.
