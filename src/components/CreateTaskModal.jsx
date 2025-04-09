@@ -60,7 +60,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                         onChange={handleChange}
                     />
                     <div className='flex items-center justify-between w-[80%]'>
-                        <label>Priority</label>
+                        <label className='font-semibold'>Priority</label>
                         <select
                             name='priority'
                             onChange={handleChange}
@@ -71,7 +71,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                             <option value="High">High</option>
                         </select>
                         <button
-                            className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] text-gray-200 dark:text-[#242424] rounded-lg py-2 px-4' : 'bg-gray-900 dark:bg-white text-white dark:text-[#242424] rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
+                            className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] text-gray-200 dark:text-[#242424] rounded-lg py-2 px-4' : 'bg-gray-900 dark:bg-white text-white dark:text-[#242424] font-bold rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
                             disabled={isDisabled}
                             onClick={handleClick}
                         >Save

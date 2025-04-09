@@ -31,7 +31,7 @@ const SingleTask = ({ task }) => {
 
     return (
         <div>
-            <div className={className + ' border-l-2 h-[100px] bg-gray-400 dark:bg-gray-900 m-2 p-4 rounded-lg'}>
+            <div className={className + ' border-l-3 h-[100px] bg-gray-400 dark:bg-gray-900 m-2 p-4 rounded-lg'}>
                 <h2 className='font-bold text-gray-900 dark:text-inherit'>{task.title}</h2>
                 <div className='flex justify-between items-center gap-2 mt-2 font-semibold'>
                     <button
@@ -40,16 +40,6 @@ const SingleTask = ({ task }) => {
                     >
                         Edit
                     </button>
-                    <select
-                        name='priority'
-                        value={task.priority}
-                        onChange={(e) => handleChange(e, task)}
-                        className='dark:bg-gray-700 bg-gray-900 text-white dark:text-gray-300 rounded-lg outline-none py-1.5 px-2'
-                    >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
                     <button
                         onClick={() => clearTask()}
                         className='bg-red-500 w-[75px] text-[#fafafa] rounded-lg py-1 px-2 cursor-pointer hover:font-bold duration-300 linear'

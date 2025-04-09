@@ -34,7 +34,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
             <div className='w-full h-full fixed bg-[rgba(0,0,0,0.3)] dark:bg-[rgba(0,0,0,0.7)] flex items-center justify-center' onClick={onClose}>
                 <div className='w-[300px] h-[400px] gap-4 bg-gray-500 dark:bg-[#242424] rounded-lg shadow-lg flex flex-col items-center justify-center' onClick={(e) => e.stopPropagation()}>
                     <div className="flex flex-col justify-between items-left gap-2 w-[80%]">
-                        <label className="ml-1 font-semibold text-gray-500">Title</label>
+                        <label className="ml-1 font-semibold">Title</label>
                         <input
                             name='title'
                             type="text"
@@ -44,7 +44,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
                         />
                     </div>
                     <div className="flex flex-col justify-between items-left gap-2 w-[80%]">
-                        <label className="ml-1 font-semibold text-gray-500">Description</label>
+                        <label className="ml-1 font-semibold">Description</label>
                         <textarea
                             ref={focusRef}
                             name='description'
@@ -54,7 +54,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
                         />
                     </div>
                     <div className="flex justify-between items-center w-[80%]">
-                        <label className="ml-1 font-semibold text-gray-500">Priority</label>
+                        <label className="ml-1 font-semibold">Priority</label>
                         <select
                             name='priority'
                             value={updatedTask.priority}
@@ -67,7 +67,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
                         </select>
                     </div>
                     <div className="flex justify-between items-center w-[80%]">
-                        <label className="ml-1 font-semibold text-gray-500">Status</label>
+                        <label className="ml-1 font-semibold">Status</label>
                         <select
                             name='status'
                             value={updatedTask.status}
@@ -80,7 +80,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
                         </select>
                     </div>
                     <button
-                        className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] w-[80%] text-gray-200 dark:text-[#242424] rounded-lg py-2 px-4' : 'bg-gray-900 dark:bg-white w-[80%] text-white dark:text-[#242424] rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
+                        className={isDisabled ? 'bg-[rgba(0,0,0,0.5)] dark:bg-[rgba(255,255,255,0.5)] w-[80%] text-gray-200 dark:text-[#242424] rounded-lg py-2 px-4' : 'bg-gray-900 dark:bg-white w-[80%] text-white dark:text-[#242424] font-bold rounded-lg py-2 px-4 cursor-pointer hover:font-bold duration-300 linear'}
                         disabled={isDisabled}
                         onClick={handleClick}
                     >Save
