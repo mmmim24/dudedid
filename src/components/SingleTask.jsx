@@ -1,5 +1,5 @@
 import React from 'react'
-import { TaskStore } from '../store/taskStore';
+import { useTaskStore } from '../store/taskStore';
 import EditTaskModal from './EditTaskModal';
 
 const SingleTask = ({ task }) => {
@@ -11,15 +11,7 @@ const SingleTask = ({ task }) => {
         setIsOpen(false);
     };
 
-    const { dispatch } = React.useContext(TaskStore);
-    const handleChange = (event, payload) => {
-        const newPriority = event.target.value;
-        const updatedTask = { ...payload, priority: newPriority };
-        dispatch({ type: 'UPDATE_TASK', payload: updatedTask });
-    }
-    const clearTask = () => {
-        dispatch({ type: 'DELETE_TASK', payload: task });
-    }
+    const { deleteTask } = useTaskStore();
     // console.log(task.id)
     const className =
         task.priority === 'High'
@@ -41,7 +33,7 @@ const SingleTask = ({ task }) => {
                         Edit
                     </button>
                     <button
-                        onClick={() => clearTask()}
+                        onClick={() => deleteTask(task)}
                         className='bg-red-500 w-[75px] text-[#fafafa] rounded-lg py-1 px-2 cursor-pointer hover:font-bold duration-300 linear'
                     >
                         Clear

@@ -1,7 +1,7 @@
 import './App.css'
 import Header from './components/Header'
 import Home from './components/Home'
-import { TaskProvider } from './store/taskStore'
+import TaskProvider from './store/taskStore'
 
 function App() {
 

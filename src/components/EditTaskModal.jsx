@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { TaskStore } from '../store/taskStore';
+import { useTaskStore } from '../store/taskStore';
 
 const EditTaskModal = ({ isOpen, onClose, task }) => {
     if (!isOpen) return null;
 
     const [updatedTask, setUpdatedTask] = React.useState(task);
-    const { dispatch } = React.useContext(TaskStore);
+    const { updateTask } = useTaskStore();
     const [isDisabled, setIsDisabled] = React.useState(true);
 
     const focusRef = React.useRef(null);
@@ -16,7 +16,7 @@ const EditTaskModal = ({ isOpen, onClose, task }) => {
     }
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch({ type: 'UPDATE_TASK', payload: updatedTask });
+        updateTask(updatedTask);
         onClose();
     }
 

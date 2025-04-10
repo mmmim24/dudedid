@@ -4,19 +4,15 @@ import SingleTask from './SingleTask'
 const MobileView = ({ ctx }) => {
 
     const [task, setTask] = React.useState([]);
-    const { state, dispatch } = ctx;
+    const { tasks, deleteAll } = ctx;
     const [currentStatus, setCurrentStatus] = React.useState('Pending');
 
     const handleClick = (status) => {
         setCurrentStatus(status);
     }
     React.useEffect(() => {
-        setTask(state.filter(t => t.status === currentStatus));
-    }, [currentStatus, state]);
-
-    const clearAllTask = (currentStatus) => {
-        dispatch({ type: 'DELETE_ALL', payload: currentStatus });
-    }
+        setTask(tasks.filter(t => t.status === currentStatus));
+    }, [currentStatus, tasks]);
 
     return (
         <>
@@ -57,7 +53,7 @@ const MobileView = ({ ctx }) => {
                     ? <p className='text-center text-gray-500'>No tasks </p>
                     : <>
                         <button
-                            onClick={() => clearAllTask(currentStatus)}
+                            onClick={() => deleteAll(currentStatus)}
                             className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                         >
                             Clear All

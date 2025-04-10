@@ -2,23 +2,18 @@ import React from 'react'
 import SingleTask from './SingleTask'
 
 const WebViw = ({ ctx }) => {
-    const { state, dispatch } = ctx;
+    const { tasks, deleteAll } = ctx;
     const [Pending, setPending] = React.useState([])
     const [started, setStarted] = React.useState([])
     const [Completed, setCompleted] = React.useState([])
     React.useEffect(() => {
-        const PendingTasks = state.filter(task => task.status === 'Pending')
-        const startedTasks = state.filter(task => task.status === 'Started')
-        const CompletedTasks = state.filter(task => task.status === 'Completed')
+        const PendingTasks = tasks.filter(task => task.status === 'Pending')
+        const startedTasks = tasks.filter(task => task.status === 'Started')
+        const CompletedTasks = tasks.filter(task => task.status === 'Completed')
         setPending(PendingTasks)
         setStarted(startedTasks)
         setCompleted(CompletedTasks)
-    }, [state]);
-
-    const clearTask = (status) => {
-        dispatch({ type: 'DELETE_ALL', payload: status });
-    }
-
+    }, [tasks]);
 
     return (
         <>
@@ -32,7 +27,7 @@ const WebViw = ({ ctx }) => {
                             ? <p className='text-center text-gray-500'>No tasks Pending</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('Pending')}
+                                    onClick={() => deleteAll('Pending')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
@@ -56,7 +51,7 @@ const WebViw = ({ ctx }) => {
                             ? <p className='text-center text-gray-500'>No tasks Started</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('Started')}
+                                    onClick={() => deleteAll('Started')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
@@ -80,7 +75,7 @@ const WebViw = ({ ctx }) => {
                             ? <p className='text-center text-gray-500'>No tasks Completed</p>
                             : <>
                                 <button
-                                    onClick={() => clearTask('Completed')}
+                                    onClick={() => deleteAll('Completed')}
                                     className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All

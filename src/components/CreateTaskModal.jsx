@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { TaskStore } from '../store/taskStore';
+import { useTaskStore } from '../store/taskStore';
 
 const CreateTaskModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     const [task, setTask] = React.useState({
-        title: null,
-        description: null,
-        priority: null,
+        title: '',
+        description: '',
+        priority: 'Low',
     });
-    const { state, dispatch } = React.useContext(TaskStore);
+    const { createTask } = useTaskStore();
     const [isDisabled, setIsDisabled] = React.useState(true);
 
     const focusRef = React.useRef(null);
@@ -28,7 +28,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                 status: 'Pending',
                 priority: task.priority
             }
-            dispatch({ type: 'CREATE_TASK', payload: newTask });
+            createTask(newTask);
         }
         onClose();
     }
