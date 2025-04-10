@@ -17,7 +17,7 @@ const WebViw = ({ ctx }) => {
 
     return (
         <>
-            <div className='m-10 grid grid-cols-3 gap-10 h-[60vh]'>
+            <div className='m-10 grid grid-cols-3 gap-10 h-[80vh]'>
                 <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
                     <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
                         Pending

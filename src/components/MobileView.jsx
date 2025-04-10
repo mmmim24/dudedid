@@ -48,25 +48,27 @@ const MobileView = ({ ctx }) => {
                     }
                 </button>
             </div>
-            {
-                task.length === 0
-                    ? <p className='text-center text-gray-500'>No tasks </p>
-                    : <>
-                        <button
-                            onClick={() => deleteAll(currentStatus)}
-                            className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
-                        >
-                            Clear All
-                        </button>
-                        {
-                            task.map((t) => {
-                                return (
-                                    <SingleTask key={t.id} task={t} />
-                                )
-                            })
-                        }
-                    </>
-            }
+            <div className='overflow-scroll h-[80vh]'>
+                {
+                    task.length === 0
+                        ? <p className='text-center text-gray-500'>No tasks </p>
+                        : <>
+                            <button
+                                onClick={() => deleteAll(currentStatus)}
+                                className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                            >
+                                Clear All
+                            </button>
+                            {
+                                task.map((t) => {
+                                    return (
+                                        <SingleTask key={t.id} task={t} />
+                                    )
+                                })
+                            }
+                        </>
+                }
+            </div>
         </>
     )
 }
