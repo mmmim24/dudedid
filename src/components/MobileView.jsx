@@ -7,6 +7,11 @@ const MobileView = ({ ctx }) => {
     const { tasks, deleteAll } = ctx;
     const [currentStatus, setCurrentStatus] = React.useState('Pending');
 
+    const [expandedTaskId, setExpandedTaskId] = React.useState();
+    const toggleAccordion = (taskId) => {
+        setExpandedTaskId(taskId);
+    };
+
     const handleClick = (status) => {
         setCurrentStatus(status);
     }
@@ -55,14 +60,19 @@ const MobileView = ({ ctx }) => {
                         : <>
                             <button
                                 onClick={() => deleteAll(currentStatus)}
-                                className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                className='bg-red-700 w-[80px] text-[#fafafa] text-sm rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                             >
                                 Clear All
                             </button>
                             {
                                 task.map((t) => {
                                     return (
-                                        <SingleTask key={t.id} task={t} />
+                                        <SingleTask
+                                            key={t.id}
+                                            task={t}
+                                            isExpanded={expandedTaskId === t.id}
+                                            toggleAccordion={() => toggleAccordion(t.id)}
+                                        />
                                     )
                                 })
                             }

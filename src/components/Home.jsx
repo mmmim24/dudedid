@@ -13,9 +13,9 @@ const Home = () => {
             setIsMobile(true);
         }
     }
-    tasks.sort((priorityA, priorityB) => {
-        const priorityOrder = ['High', 'Medium', 'Low'];
-        return priorityOrder.indexOf(priorityA.priority) - priorityOrder.indexOf(priorityB.priority);
+    tasks.sort((taskA, taskB) => {
+        const priorityOrder = ['Low', 'Medium', 'High'];
+        return priorityOrder.indexOf(taskB.priority) - priorityOrder.indexOf(taskA.priority);
     });
     React.useEffect(() => {
         handleResize();

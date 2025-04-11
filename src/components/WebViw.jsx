@@ -6,6 +6,11 @@ const WebViw = ({ ctx }) => {
     const [Pending, setPending] = React.useState([])
     const [started, setStarted] = React.useState([])
     const [Completed, setCompleted] = React.useState([])
+    const [expandedTaskId, setExpandedTaskId] = React.useState();
+    const toggleAccordion = (taskId) => {
+        setExpandedTaskId(taskId);
+    };
+
     React.useEffect(() => {
         const PendingTasks = tasks.filter(task => task.status === 'Pending')
         const startedTasks = tasks.filter(task => task.status === 'Started')
@@ -18,8 +23,8 @@ const WebViw = ({ ctx }) => {
     return (
         <>
             <div className='m-10 grid grid-cols-3 gap-10 h-[80vh]'>
-                <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
+                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
+                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
                         Pending
                     </h1>
                     {
@@ -28,22 +33,27 @@ const WebViw = ({ ctx }) => {
                             : <>
                                 <button
                                     onClick={() => deleteAll('Pending')}
-                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
                                     Pending.map((t) => {
                                         return (
-                                            <SingleTask key={t.id} task={t} />
+                                            <SingleTask
+                                                key={t.id}
+                                                task={t}
+                                                isExpanded={expandedTaskId === t.id}
+                                                toggleAccordion={() => toggleAccordion(t.id)}
+                                            />
                                         )
                                     })
                                 }
                             </>
                     }
                 </div>
-                <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
+                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
+                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
                         Started
                     </h1>
                     {
@@ -52,22 +62,27 @@ const WebViw = ({ ctx }) => {
                             : <>
                                 <button
                                     onClick={() => deleteAll('Started')}
-                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
                                     started.map((t) => {
                                         return (
-                                            <SingleTask key={t.id} task={t} />
+                                            <SingleTask
+                                                key={t.id}
+                                                task={t}
+                                                isExpanded={expandedTaskId === t.id}
+                                                toggleAccordion={() => toggleAccordion(t.id)}
+                                            />
                                         )
                                     })
                                 }
                             </>
                     }
                 </div>
-                <div className='h-[100%] bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl text-gray-400'>
+                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
+                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
                         Completed
                     </h1>
                     {
@@ -76,14 +91,19 @@ const WebViw = ({ ctx }) => {
                             : <>
                                 <button
                                     onClick={() => deleteAll('Completed')}
-                                    className='bg-red-500 w-[80px] text-[#fafafa] rounded-lg p-2 cursor-pointer font-semibold hover:font-bold duration-300 linear'
+                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
                                 >
                                     Clear All
                                 </button>
                                 {
                                     Completed.map((t) => {
                                         return (
-                                            <SingleTask key={t.id} task={t} />
+                                            <SingleTask
+                                                key={t.id}
+                                                task={t}
+                                                isExpanded={expandedTaskId === t.id}
+                                                toggleAccordion={() => toggleAccordion(t.id)}
+                                            />
                                         )
                                     })
                                 }
