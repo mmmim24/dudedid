@@ -32,7 +32,7 @@ const Footer = () => {
             <div className='h-[10vh] flex flex-col border-x-4 lg:flex-row justify-center items-center text-xs md:text-sm lg:text-md lg:gap-10'>
                 <div className="flex">
                     <p>Task Tracker</p>
-                    <a href='https://www.github.com/mmmim24' target='_blank'>&copy; Mustaq Mujahid Mim </a>
+                    <a href='https://www.github.com/mmmim24/dudedid' target='_blank'>&copy; Mustaq Mujahid Mim </a>
                 </div>
                 <div>
                     <p>{dateTime}</p>

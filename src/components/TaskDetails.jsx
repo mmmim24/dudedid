@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTaskStore } from '../store/taskStore';
 
-const TaskDetails = ({ task, className }) => {
+const TaskDetails = ({ task, className, toggleAccordion }) => {
 
     const [updatedTask, setUpdatedTask] = React.useState(task);
     const { updateTask, deleteTask } = useTaskStore();
@@ -13,7 +13,7 @@ const TaskDetails = ({ task, className }) => {
     const handleSave = (e) => {
         e.preventDefault();
         updateTask(updatedTask);
-        onClose();
+        toggleAccordion();
     }
 
     React.useEffect(() => {
@@ -77,9 +77,9 @@ const TaskDetails = ({ task, className }) => {
                         onChange={handleChange}
                         className='h-[30px] w-1/2 bg-gray-300 dark:bg-gray-900 rounded-lg px-1 outline-none'
                     >
-                        <option value="Pending">Pending</option>
-                        <option value="Started">Started</option>
-                        <option value="Completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="started">Started</option>
+                        <option value="completed">Completed</option>
                     </select>
                 </div>
 

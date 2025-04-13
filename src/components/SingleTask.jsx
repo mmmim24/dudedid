@@ -1,7 +1,12 @@
 import React from 'react'
 import { MdDragIndicator, MdOutlineKeyboardDoubleArrowDown, MdOutlineKeyboardDoubleArrowUp } from "react-icons/md";
 import TaskDetails from './TaskDetails';
-const SingleTask = ({ task, isExpanded, toggleAccordion }) => {
+import { useDraggable } from '@dnd-kit/core';
+const SingleTask = ({ task, isExpanded = false, toggleAccordion }) => {
+
+    const { attributes, listeners, setNodeRef } = useDraggable({
+        id: task.id,
+    });
 
     // console.log(task.id)
     const className =
@@ -15,7 +20,9 @@ const SingleTask = ({ task, isExpanded, toggleAccordion }) => {
     return (
         <div>
             <div
-                draggable
+                ref={setNodeRef}
+                {...attributes}
+                {...listeners}
                 className={
                     className +
                     ' border-l-3 bg-gray-300 dark:bg-gray-900 m-2 p-2 flex justify-between items-center h-[50px]' +
@@ -43,7 +50,7 @@ const SingleTask = ({ task, isExpanded, toggleAccordion }) => {
                 </div>
             </div>
             {
-                isExpanded && <TaskDetails task={task} className={className} />
+                isExpanded && <TaskDetails task={task} className={className} toggleAccordion={toggleAccordion} />
             }
         </div>
     )

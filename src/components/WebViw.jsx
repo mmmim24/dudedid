@@ -1,117 +1,47 @@
 import React from 'react'
-import SingleTask from './SingleTask'
+import Droppable from './Droppable';
 
 const WebViw = ({ ctx }) => {
-    const { tasks, deleteAll } = ctx;
-    const [Pending, setPending] = React.useState([])
+    const { tasks } = ctx;
+    const [pending, setPending] = React.useState([])
     const [started, setStarted] = React.useState([])
-    const [Completed, setCompleted] = React.useState([])
+    const [completed, setCompleted] = React.useState([])
+
     const [expandedTaskId, setExpandedTaskId] = React.useState();
     const toggleAccordion = (taskId) => {
-        setExpandedTaskId(taskId);
+        setExpandedTaskId(prevId => prevId === taskId ? null : taskId);
     };
 
     React.useEffect(() => {
-        const PendingTasks = tasks.filter(task => task.status === 'Pending')
-        const startedTasks = tasks.filter(task => task.status === 'Started')
-        const CompletedTasks = tasks.filter(task => task.status === 'Completed')
-        setPending(PendingTasks)
+        const pendingTasks = tasks.filter(task => task.status === 'pending')
+        const startedTasks = tasks.filter(task => task.status === 'started')
+        const completedTasks = tasks.filter(task => task.status === 'completed')
+        setPending(pendingTasks)
         setStarted(startedTasks)
-        setCompleted(CompletedTasks)
+        setCompleted(completedTasks)
     }, [tasks]);
 
     return (
-        <>
-            <div className='m-10 grid grid-cols-3 gap-10 h-[80vh]'>
-                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
-                        Pending
-                    </h1>
-                    {
-                        Pending.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks Pending</p>
-                            : <>
-                                <button
-                                    onClick={() => deleteAll('Pending')}
-                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
-                                >
-                                    Clear All
-                                </button>
-                                {
-                                    Pending.map((t) => {
-                                        return (
-                                            <SingleTask
-                                                key={t.id}
-                                                task={t}
-                                                isExpanded={expandedTaskId === t.id}
-                                                toggleAccordion={() => toggleAccordion(t.id)}
-                                            />
-                                        )
-                                    })
-                                }
-                            </>
-                    }
-                </div>
-                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
-                        Started
-                    </h1>
-                    {
-                        started.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks Started</p>
-                            : <>
-                                <button
-                                    onClick={() => deleteAll('Started')}
-                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
-                                >
-                                    Clear All
-                                </button>
-                                {
-                                    started.map((t) => {
-                                        return (
-                                            <SingleTask
-                                                key={t.id}
-                                                task={t}
-                                                isExpanded={expandedTaskId === t.id}
-                                                toggleAccordion={() => toggleAccordion(t.id)}
-                                            />
-                                        )
-                                    })
-                                }
-                            </>
-                    }
-                </div>
-                <div className='h-[100%] bg-gray-400 dark:bg-gray-800 overflow-scroll rounded-xl shadow-md shadow-gray-700'>
-                    <h1 className='uppercase my-4 text-center font-bold text-2xl dark:text-gray-400'>
-                        Completed
-                    </h1>
-                    {
-                        Completed.length === 0
-                            ? <p className='text-center text-gray-500'>No tasks Completed</p>
-                            : <>
-                                <button
-                                    onClick={() => deleteAll('Completed')}
-                                    className='bg-red-700 w-[80px] text-sm text-[#fafafa] rounded-lg px-2 py-1 cursor-pointer font-semibold hover:font-bold duration-300 linear'
-                                >
-                                    Clear All
-                                </button>
-                                {
-                                    Completed.map((t) => {
-                                        return (
-                                            <SingleTask
-                                                key={t.id}
-                                                task={t}
-                                                isExpanded={expandedTaskId === t.id}
-                                                toggleAccordion={() => toggleAccordion(t.id)}
-                                            />
-                                        )
-                                    })
-                                }
-                            </>
-                    }
-                </div>
-            </div>
-        </>
+        <div className='m-10 grid grid-cols-3 gap-10 h-[80vh]'>
+            <Droppable
+                id="pending"
+                tasks={pending}
+                expandedTaskId={expandedTaskId}
+                toggleAccordion={toggleAccordion}
+            />
+            <Droppable
+                id="started"
+                tasks={started}
+                expandedTaskId={expandedTaskId}
+                toggleAccordion={toggleAccordion}
+            />
+            <Droppable
+                id="completed"
+                tasks={completed}
+                expandedTaskId={expandedTaskId}
+                toggleAccordion={toggleAccordion}
+            />
+        </div>
     )
 }
 

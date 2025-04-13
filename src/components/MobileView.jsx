@@ -5,11 +5,11 @@ const MobileView = ({ ctx }) => {
 
     const [task, setTask] = React.useState([]);
     const { tasks, deleteAll } = ctx;
-    const [currentStatus, setCurrentStatus] = React.useState('Pending');
+    const [currentStatus, setCurrentStatus] = React.useState('pending');
 
     const [expandedTaskId, setExpandedTaskId] = React.useState();
     const toggleAccordion = (taskId) => {
-        setExpandedTaskId(taskId);
+        setExpandedTaskId(prevId => prevId === taskId ? null : taskId);
     };
 
     const handleClick = (status) => {
@@ -24,30 +24,30 @@ const MobileView = ({ ctx }) => {
             <div className='my-6 flex gap-6 items-center justify-around'>
                 <button
                     className='uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('Pending')}
+                    onClick={() => handleClick('pending')}
                 >
                     {
-                        currentStatus === 'Pending'
+                        currentStatus === 'pending'
                             ? <span className="border-b-2 pb-2 text-black dark:text-white">Pending</span>
                             : <span>Pending</span>
                     }
                 </button>
                 <button
                     className='uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('Started')}
+                    onClick={() => handleClick('started')}
                 >
                     {
-                        currentStatus === 'Started'
+                        currentStatus === 'started'
                             ? <span className="border-b-2 pb-2 text-black dark:text-white">Started</span>
                             : <span>Started</span>
                     }
                 </button>
                 <button
                     className='uppercase my-4 text-center font-bold text-lg text-gray-400'
-                    onClick={() => handleClick('Completed')}
+                    onClick={() => handleClick('completed')}
                 >
                     {
-                        currentStatus === 'Completed'
+                        currentStatus === 'completed'
                             ? <span className="border-b-2 pb-2 text-black dark:text-white">Finished</span>
                             : <span>Finished</span>
                     }

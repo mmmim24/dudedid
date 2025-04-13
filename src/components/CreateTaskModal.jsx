@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { useTaskStore } from '../store/taskStore';
 
-const CreateTaskModal = ({ isOpen, onClose }) => {
-    if (!isOpen) return null;
+const CreateTaskModal = ({ onClose }) => {
     const [task, setTask] = React.useState({
         title: '',
         description: '',
@@ -25,7 +24,7 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
                 id: id,
                 title: task.title,
                 description: task.description,
-                status: 'Pending',
+                status: 'pending',
                 priority: task.priority
             }
             createTask(newTask);

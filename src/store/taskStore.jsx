@@ -5,28 +5,28 @@ const taskList = [
         "id": 1,
         "title": "Devops Roadmap",
         "description": "Operating Systems, Networking and Cloud Computing",
-        "status": "Started",
+        "status": "started",
         "priority": "High"
     },
     {
         "id": 2,
         "title": "Web Development",
         "description": "HTML, CSS, JavaScript, React, Node.js",
-        "status": "Completed",
+        "status": "completed",
         "priority": "High"
     },
     {
         "id": 3,
         "title": "Data Science",
         "description": "Python, R, SQL, Machine Learning",
-        "status": "Started",
+        "status": "started",
         "priority": "Medium"
     },
     {
         "id": 4,
         "title": "Mobile Development",
         "description": "Flutter, React Native, Swift, Kotlin",
-        "status": "Pending",
+        "status": "pending",
         "priority": "Low"
     }
 ];
