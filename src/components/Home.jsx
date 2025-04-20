@@ -6,7 +6,7 @@ import SingleTask from './SingleTask';
 import { DndContext, DragOverlay, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 
 const Home = () => {
-    const { tasks, deleteAll, updateTask } = useTaskStore();
+    const { tasks, loading, deleteAll, updateTask } = useTaskStore();
     const [isMobile, setIsMobile] = React.useState(true);
     const [activeId, setActiveId] = React.useState(null);
 
@@ -57,6 +57,15 @@ const Home = () => {
             window.removeEventListener('resize', handleResize);
         }
     }, [])
+
+    if (loading) {
+        return (
+            <div className="h-[80vh] flex items-center justify-center">
+                <p className="text-xl">Loading your tasks...</p>
+            </div>
+        );
+    }
+
     return (
         <>
             {isMobile
