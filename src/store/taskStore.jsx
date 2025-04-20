@@ -1,4 +1,6 @@
 import React from "react";
+import { useAuth } from "./authStore";
+import supabase from "../lib/supabaseClient";
 const TaskStore = React.createContext()
 const taskList = [
     {
@@ -6,69 +8,183 @@ const taskList = [
         "title": "Devops Roadmap",
         "description": "Operating Systems, Networking and Cloud Computing",
         "status": "started",
-        "priority": "High"
+        "priority": "High",
+        "created_at": "2023-10-03T12:00:00Z"
     },
     {
         "id": 2,
         "title": "Web Development",
         "description": "HTML, CSS, JavaScript, React, Node.js",
         "status": "completed",
-        "priority": "High"
+        "priority": "High",
+        "created_at": "2023-10-01T12:00:00Z"
     },
     {
         "id": 3,
         "title": "Data Science",
         "description": "Python, R, SQL, Machine Learning",
         "status": "started",
-        "priority": "Medium"
+        "priority": "Medium",
+        "created_at": "2023-10-02T12:00:00Z"
     },
     {
         "id": 4,
         "title": "Mobile Development",
         "description": "Flutter, React Native, Swift, Kotlin",
         "status": "pending",
-        "priority": "Low"
+        "priority": "Low",
+        "created_at": "2023-10-04T12:00:00Z"
     }
 ];
-const taskReducer = (state, action) => {
-    switch (action.type) {
-        case 'CREATE_TASK':
-            return [...state, action.payload];
-        case 'DELETE_TASK':
-            return state.filter(task => task.id !== action.payload.id);
-        case 'DELETE_ALL':
-            return state.filter(task => task.status !== action.payload);
-        case 'UPDATE_TASK':
-            return state.map(task => {
-                if (task.id === action.payload.id) {
-                    return { ...task, ...action.payload };
-                }
-                return task;
-            });
-        default:
-            return state;
-    }
-};
 const TaskProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(taskReducer, taskList);
+    const { user } = useAuth();
+    const [loading, setLoading] = React.useState(true);
+    const [tasks, setTasks] = React.useState(taskList);
 
-    const tasks = state;
+    const fetchTasks = async () => {
+        if (user) {
+            try {
+                setLoading(true);
+                const { data, error } = await supabase
+                    .from('tasks')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at');
 
-    function createTask(task) {
-        dispatch({ type: 'CREATE_TASK', payload: task });
-    }
-    function deleteTask(task) {
-        dispatch({ type: 'DELETE_TASK', payload: task });
-    }
-    function deleteAll(status) {
-        dispatch({ type: 'DELETE_ALL', payload: status });
-    }
-    function updateTask(task) {
-        dispatch({ type: 'UPDATE_TASK', payload: task });
-    }
+                if (error) {
+                    throw error;
+                }
+                setTasks(data || []);
+
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        else {
+            setLoading(false);
+            setTasks(taskList);
+        }
+    };
+
+    const createTask = async (task) => {
+        if (!user) {
+            setTasks(prev => [...prev, task]);
+            return;
+        }
+        else {
+
+            try {
+                const { data, error } = await supabase
+                    .from('tasks')
+                    .insert(task)
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+                setTasks(prev => [...prev, data[0]]);
+
+            } catch (error) {
+                console.error('Error creating task:', error);
+            }
+        }
+    };
+
+    const deleteTask = async (task) => {
+        if (!user) {
+            setTasks(prev =>
+                prev.filter(t => t.id !== task.id)
+            );
+            return;
+        }
+        else {
+
+            try {
+                const { error } = await supabase
+                    .from('tasks')
+                    .delete()
+                    .eq('id', task.id)
+                    .eq('user_id', user.id);
+
+                if (error) {
+                    throw error;
+                }
+                setTasks(prev => prev.filter(t => t.id !== task.id));
+
+            } catch (error) {
+                console.error('Error deleting task:', error);
+            }
+        }
+    };
+
+    const deleteAll = async (status) => {
+        if (!user) {
+            setTasks(prev => prev.filter(task => task.status !== status));
+            return;
+        }
+        else {
+
+            try {
+                const { error } = await supabase
+                    .from('tasks')
+                    .delete()
+                    .eq('status', status)
+                    .eq('user_id', user.id);
+
+                if (error) {
+                    throw error;
+                }
+                setTasks(prev => prev.filter(task => task.status !== status));
+
+            } catch (error) {
+                console.error('Error deleting tasks:', error);
+            }
+        }
+    };
+
+    const updateTask = async (updatedTask) => {
+        if (!user) {
+            setTasks(prev =>
+                prev.map(task => task.id === updatedTask.id ? updatedTask : task)
+            );
+            return;
+        }
+        else {
+
+            try {
+                const { error } = await supabase
+                    .from('tasks')
+                    .update(updatedTask)
+                    .eq('id', updatedTask.id)
+                    .eq('user_id', user.id);
+
+                if (error) {
+                    throw error;
+                }
+                setTasks(prev =>
+                    prev.map(task => task.id === updatedTask.id ? updatedTask : task)
+                );
+
+            } catch (error) {
+                console.error('Error updating task:', error);
+            }
+        }
+    };
+
+    React.useEffect(() => {
+        if (user) {
+            fetchTasks();
+        } else {
+            setLoading(false);
+            setTasks(taskList);
+        }
+    }, [user]);
 
     const ctxValue = {
         tasks,
+        loading,
         createTask,
         deleteTask,
         deleteAll,

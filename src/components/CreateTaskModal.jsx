@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { useTaskStore } from '../store/taskStore';
+import { useAuth } from '../store/authStore';
 
 const CreateTaskModal = ({ onClose }) => {
+    const { user } = useAuth();
     const [task, setTask] = React.useState({
         title: '',
         description: '',
@@ -18,16 +20,30 @@ const CreateTaskModal = ({ onClose }) => {
     }
     const handleClick = (e) => {
         e.preventDefault();
-        if (task.title !== null && task.description !== null) {
-            const id = Date.now();
-            const newTask = {
-                id: id,
-                title: task.title,
-                description: task.description,
-                status: 'pending',
-                priority: task.priority
+        if (task.title && task.description) {
+            if (user) {
+                const newTask = {
+                    id: Date.now(),
+                    title: task.title,
+                    description: task.description,
+                    status: 'pending',
+                    priority: task.priority,
+                    user_id: user.id,
+                    created_at: new Date().toISOString()
+                }
+                createTask(newTask);
             }
-            createTask(newTask);
+            else {
+                const newTask = {
+                    id: Date.now(),
+                    title: task.title,
+                    description: task.description,
+                    status: 'pending',
+                    priority: task.priority,
+                    created_at: new Date().toISOString()
+                }
+                createTask(newTask);
+            }
         }
         onClose();
     }
