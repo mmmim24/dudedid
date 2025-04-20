@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTaskStore } from '../store/taskStore';
+import { formatDate } from '../utils/format';
 
 const TaskDetails = ({ task, className, toggleAccordion }) => {
 
@@ -50,7 +51,17 @@ const TaskDetails = ({ task, className, toggleAccordion }) => {
                         onChange={handleChange}
                     />
                 </div>
-
+                {task.created_at && <div className="flex flex-col justify-center items-left gap-1">
+                    <label htmlFor='created_at' className="ml-1 text-left font-semibold">Created At</label>
+                    <input
+                        name='created_at'
+                        id='created_at'
+                        type="text"
+                        defaultValue={formatDate(task.created_at)}
+                        className='h-[30px] bg-gray-300 dark:bg-gray-900 rounded-lg p-2 outline-none'
+                        readOnly
+                    />
+                </div>}
                 <div className='flex justify-between items-center gap-1 mt-2'>
                     <label htmlFor='priority' className="w-1/2 ml-1 text-left font-semibold">Priority</label>
                     <select
