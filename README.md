@@ -8,17 +8,23 @@ A simple and intuitive task management application built with React and Tailwind
 -   **Task Status Tracking:** Track tasks in "Pending", "Started", and "Completed" categories.
 -   **Drag and Drop:** Intuitively move tasks between status columns using drag and drop.
 -   **Responsive Design:** Separate views for mobile and desktop using Tailwind CSS's responsive utilities.
--   **React Context API:** Utilizes React Context API for efficient state management.
+-   **Google Authentication:** Sign in with your Google account to save and sync your tasks.
+-   **Demo Mode:** Try the app without signing in using demo tasks.
+-   **Supabase Integration:** Cloud storage for your tasks when signed in.
+-   **Real-time Updates:** Changes are reflected instantly across the interface.
 -   **Clear All Tasks:** Option to clear all tasks within a specific status category.
 -   **Task Accordion:** Expand tasks to view and edit details.
 
 ## Technologies Used
 
 -   React 19
--   Vite
--   Tailwind CSS
--   React Context API
+-   Vite 6
+-   Tailwind CSS 4
 -   @dnd-kit/core for drag and drop functionality
+-   Supabase for authentication and database
+-   React Context API for state management
+-   React Hot Toast for notifications
+-   Docker for containerization
 
 ## Getting Started
 
@@ -26,6 +32,7 @@ A simple and intuitive task management application built with React and Tailwind
 
 -   Node.js (v16 or higher)
 -   npm or yarn
+-   Supabase account (for authentication and database)
 
 ### Installation
 
@@ -42,6 +49,13 @@ A simple and intuitive task management application built with React and Tailwind
     npm install
     ```
 
+3.  Create a .env file with Supabase credentials:
+
+    ```
+    VITE_SUPABASE_URL=your-supabase-project-url
+    VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+    ```
+
 ### Development
 
 1.  Start the development server:
@@ -51,6 +65,12 @@ A simple and intuitive task management application built with React and Tailwind
     ```
 
     This will start the app in development mode with hot-reloading at `http://localhost:5173`.
+
+2.  For network access (testing on other devices):
+
+    ```bash
+    npm run host
+    ```
 
 ### Building for Production
 
@@ -62,6 +82,22 @@ A simple and intuitive task management application built with React and Tailwind
 
     This will create an optimized build in the `dist` directory.
 
+### Docker Deployment
+
+1.  Build the Docker image:
+
+    ```bash
+    docker build -t dudedid .
+    ```
+
+2.  Run the Docker container:
+
+    ```bash
+    docker run -p 5173:80 dudedid
+    ```
+
+    The application will be available at `http://localhost:5173`.
+
 ## Project Structure
 ```
 dudedid/
@@ -70,26 +106,46 @@ dudedid/
 │   ├── components/      # React components
 │   │   ├── CreateTaskModal.jsx  # Modal for creating tasks
 │   │   ├── Droppable.jsx        # Droppable container for drag and drop
-│   │   ├── Header.jsx           # Header component
+│   │   ├── Footer.jsx           # Footer component with date time
+│   │   ├── Header.jsx           # Header component with login button
 │   │   ├── Home.jsx             # Main Home component with DndContext
 │   │   ├── MobileView.jsx       # Mobile-specific view
 │   │   ├── SingleTask.jsx       # Individual draggable task component
 │   │   ├── TaskDetails.jsx      # Expanded task details component
 │   │   ├── WebViw.jsx           # Desktop-specific view with columns
+│   ├── lib/              # External libraries and configuration
+│   │   └── supabaseClient.js    # Supabase client configuration
 │   ├── store/           # Context and state management
-│   │   └── taskStore.jsx    # TaskStore context and reducers
+│   │   ├── authStore.jsx    # Authentication context
+│   │   └── taskStore.jsx    # Task management context
+│   ├── utils/           # Utility functions
+│   │   └── format.js    # Date formatting utilities
 │   ├── App.jsx          # Main application component
 │   ├── main.jsx         # Entry point of the application
 │   └── index.css        # Global styles
 ├── index.html           # HTML entry point
 ├── vite.config.js       # Vite configuration
+├── dockerfile           # Docker configuration for production build
 ├── package.json         # Project dependencies and scripts
 └── README.md            # Documentation
 ```
 
+## Authentication
+
+The application uses Supabase's Google OAuth for user authentication:
+
+- Users can sign in with their Google account
+- Authentication state is managed via the AuthStore context
+- User profile information is displayed when signed in
+- Demo mode is available for users who don't want to sign in
+
 ## State Management
 
-The application uses React Context API for state management. The `taskStore.jsx` file contains the `TaskProvider` component, which provides the global state for tasks and actions like `createTask`, `deleteTask`, `updateTask`, and `deleteAll`.
+The application uses React Context API for state management:
+
+- authStore.jsx handles authentication state and user information
+- taskStore.jsx provides CRUD operations for tasks with different implementations for logged-in vs demo mode
+- Data is persisted to Supabase when logged in and kept in memory when in demo mode
 
 ## Drag and Drop
 
@@ -113,5 +169,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## License
 
-[MIT](LICENSE)
-
+MIT
