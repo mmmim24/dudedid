@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "./authStore";
 import supabase from "../lib/supabaseClient";
+import toast from "react-hot-toast";
 const TaskStore = React.createContext()
 const taskList = [
     {
@@ -55,7 +56,6 @@ const TaskProvider = ({ children }) => {
                     throw error;
                 }
                 setTasks(data || []);
-
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             } finally {
@@ -71,7 +71,7 @@ const TaskProvider = ({ children }) => {
     const createTask = async (task) => {
         if (!user) {
             setTasks(prev => [...prev, task]);
-            return;
+            toast.success('Tasks created successfully');
         }
         else {
 
@@ -84,9 +84,15 @@ const TaskProvider = ({ children }) => {
                 if (error) {
                     throw error;
                 }
-                setTasks(prev => [...prev, data[0]]);
+                else {
+                    setTasks(prev => [...prev, data[0]]);
+                    toast.success('Tasks created successfully');
+                }
 
             } catch (error) {
+                toast.error('Error creating task', {
+                    position: "bottom-center"
+                });
                 console.error('Error creating task:', error);
             }
         }
@@ -97,7 +103,7 @@ const TaskProvider = ({ children }) => {
             setTasks(prev =>
                 prev.filter(t => t.id !== task.id)
             );
-            return;
+            toast.success('Task deleted');
         }
         else {
 
@@ -111,9 +117,15 @@ const TaskProvider = ({ children }) => {
                 if (error) {
                     throw error;
                 }
-                setTasks(prev => prev.filter(t => t.id !== task.id));
+                else {
+                    setTasks(prev => prev.filter(t => t.id !== task.id));
+                    toast.success('Task deleted');
+                }
 
             } catch (error) {
+                toast.error('Error deleting task', {
+                    position: "bottom-center"
+                });
                 console.error('Error deleting task:', error);
             }
         }
@@ -122,7 +134,7 @@ const TaskProvider = ({ children }) => {
     const deleteAll = async (status) => {
         if (!user) {
             setTasks(prev => prev.filter(task => task.status !== status));
-            return;
+            toast.success(`All ${status} tasks deleted`);
         }
         else {
 
@@ -136,9 +148,15 @@ const TaskProvider = ({ children }) => {
                 if (error) {
                     throw error;
                 }
-                setTasks(prev => prev.filter(task => task.status !== status));
+                else {
+                    setTasks(prev => prev.filter(task => task.status !== status));
+                    toast.success(`All ${status} tasks deleted`);
+                }
 
             } catch (error) {
+                toast.error('Error deleting tasks', {
+                    position: "bottom-center"
+                });
                 console.error('Error deleting tasks:', error);
             }
         }
@@ -163,11 +181,16 @@ const TaskProvider = ({ children }) => {
                 if (error) {
                     throw error;
                 }
-                setTasks(prev =>
-                    prev.map(task => task.id === updatedTask.id ? updatedTask : task)
-                );
+                else {
+                    setTasks(prev =>
+                        prev.map(task => task.id === updatedTask.id ? updatedTask : task)
+                    );
+                }
 
             } catch (error) {
+                toast.error('Error updating task', {
+                    position: "bottom-center"
+                });
                 console.error('Error updating task:', error);
             }
         }

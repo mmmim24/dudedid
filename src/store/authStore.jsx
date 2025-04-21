@@ -1,5 +1,6 @@
 import React from 'react';
 import supabase from '../lib/supabaseClient';
+import toast from 'react-hot-toast';
 
 const AuthContext = React.createContext();
 
@@ -25,6 +26,17 @@ const AuthProvider = ({ children }) => {
             (event, session) => {
                 setUser(session?.user || null);
                 setLoading(false);
+                if (event === 'SIGNED_IN' && session.user) {
+                    toast(`Hello ${session.user.user_metadata.full_name}!`, {
+                        position: "top-right",
+                        icon: '👋',
+                    });
+                } else if (event === 'SIGNED_OUT') {
+                    toast.success('Signed out', {
+                        position: "top-right",
+                        icon: '🤝'
+                    });
+                }
             }
         );
 
@@ -42,6 +54,9 @@ const AuthProvider = ({ children }) => {
         });
 
         if (error) {
+            toast.error('Error signing in with Google', {
+                position: "top-right"
+            });
             console.error('Error signing in with Google:', error);
         }
     };
@@ -50,6 +65,9 @@ const AuthProvider = ({ children }) => {
         const { error } = await supabase.auth.signOut();
 
         if (error) {
+            toast.error('Error signing out', {
+                position: "top-right"
+            });
             console.error('Error signing out:', error);
         }
     };

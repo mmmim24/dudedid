@@ -1,4 +1,5 @@
 import React from 'react'
+import { Toaster } from 'react-hot-toast';
 
 const Footer = () => {
 
@@ -30,6 +31,11 @@ const Footer = () => {
     return (
         <>
             <div className='h-[10vh] flex flex-col border-x-4 lg:flex-row justify-center items-center text-xs md:text-sm lg:text-md lg:gap-10'>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={true}
+                    toastOptions={{ style: { background: '#1E2939', color: '#fff' } }}
+                />
                 <div className="flex">
                     <p>Task Tracker</p>
                     <a href='https://www.github.com/mmmim24/dudedid' target='_blank'>&copy; Mustaq Mujahid Mim </a>
