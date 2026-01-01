@@ -1,0 +1,32 @@
+pip freeze > requirements.txt
+```
+
+This will create a file with all installed packages and their versions.
+
+**2. Create a `.gitignore` file**
+
+Create a file named `.gitignore` in your project root to exclude unnecessary files:
+```
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
