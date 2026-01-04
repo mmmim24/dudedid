@@ -29,6 +29,13 @@ async def getUser(id: str):
             content = {"error": f"{id} is not a valid id"}
         )
 
+@app.get("/search",status_code=status.HTTP_200_OK)
+async def search_items(q: str ,limit: int,skip: int,):
+    return {
+        "query": q,
+        "limit": limit,
+        "skip": skip,
+    }
 
 # python3 ./main.py
 # if __name__ == "__main__":
