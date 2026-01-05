@@ -3,6 +3,7 @@
 # uvicorn main:app --reload
 from fastapi import FastAPI,Query, status
 from fastapi.responses import JSONResponse
+# from ./ import users.json
 
 app = FastAPI()
 
@@ -11,6 +12,10 @@ users = ['John', 'Doe', 'Alice', 'Bob', 'Chris']
 @app.get("/")
 async def root():
     return {"message": "Hello from slowAPI"}
+
+@app.get("/users")
+async def getAllUsers():
+    return users
 
 @app.get("/users/{id}", status_code=status.HTTP_200_OK)
 async def getUser(id: str):
