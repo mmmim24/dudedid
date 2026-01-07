@@ -1,22 +1,23 @@
 [
   {
-    "id": 1,
-    "name": "John"
-  },
-  {
     "id": 2,
-    "name": "Alice"
+    "name": "Alice",
+    "email": "alice@fmm",
+    "gender": "F",
+    "age": 19
   },
   {
     "id": 3,
-    "name": "Bob"
+    "name": "Bob",
+    "email": "bob@thebuilder",
+    "gender": "M",
+    "age": 21
   },
   {
-    "id": 4,
-    "name": "Chris"
-  },
-  {
-    "id": 6,
-    "name": "Neil Diamond"
+    "id": 7,
+    "name": "Kane",
+    "email": "kane@don",
+    "gender": "M",
+    "age": 34
   }
 ]
