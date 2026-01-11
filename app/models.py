@@ -14,7 +14,7 @@ class UserUpdate(BaseModel):
     age: Optional[int] = None
 
 class UserResponse(BaseModel):
-    id: str
+    id: int
     name: str
     name: str
     email: str

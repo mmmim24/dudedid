@@ -68,8 +68,8 @@ async def getAllUsers(db: Session = Depends(connect_db)):
     users = db.query(User).all()
     return users
 
-@app.get("/users/{id}", status_code=status.HTTP_200_OK, response_model=List[UserResponse])
-async def getUser(id: str, db: Session = Depends(connect_db)):
+@app.get("/users/{id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
+async def getUser(id: int, db: Session = Depends(connect_db)):
     user = db.query(User).filter(User.id == id).first()
     
     if not user:
@@ -82,7 +82,7 @@ async def getUser(id: str, db: Session = Depends(connect_db)):
 
 
 @app.patch("/users/{id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
-async def updateUser(id: str, user: UserUpdate, db: Session = Depends(connect_db)):
+async def updateUser(id: int, user: UserUpdate, db: Session = Depends(connect_db)):
     db_user = db.query(User).filter(User.id == id).first()
     
     if not db_user:
@@ -116,7 +116,7 @@ async def updateUser(id: str, user: UserUpdate, db: Session = Depends(connect_db
     return db_user
         
 @app.put("/users/{id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
-async def replaceUser(id: str, user: UserModel, db: Session = Depends(connect_db)):
+async def replaceUser(id: int, user: UserModel, db: Session = Depends(connect_db)):
     db_user = db.query(User).filter(User.id == id).first()
     
     if not db_user:
@@ -144,7 +144,7 @@ async def replaceUser(id: str, user: UserModel, db: Session = Depends(connect_db
     return db_user
         
 @app.delete("/users/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def deleteUser(id: str, db: Session = Depends(connect_db)):
+async def deleteUser(id: int, db: Session = Depends(connect_db)):
     db_user = db.query(User).filter(User.id == id).first()
     
     if not db_user:
