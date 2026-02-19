@@ -1,5 +1,5 @@
 import json
-from database import SessionLocal, User
+from app.main.database import SessionLocal, User
 
 db = SessionLocal()
 

@@ -16,10 +16,9 @@ class UserUpdate(BaseModel):
 class UserResponse(BaseModel):
     id: int
     name: str
-    name: str
     email: str
     gender: str
     age: int
     
-    class Config:
-        from_attributes = True 
+class Config:
+    from_attributes = True
