@@ -16,7 +16,7 @@ fastapi.include_router(
     users.router,
     prefix=settings.api_prefix,
     )
-# fastapi.include_router(tasks.router,prefix=version1)
+fastapi.include_router(tasks.router,prefix=settings.api_prefix)
 
 @fastapi.get("/", status_code=status.HTTP_200_OK)
 async def root():

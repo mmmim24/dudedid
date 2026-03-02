@@ -79,6 +79,32 @@ class UserController:
         return user
     
     @staticmethod
+    def replace_user_by_id(user_id:int, data:UserCreate, db: Session):
+        new_user = db.query(User).filter(User.id==user_id).first()
+        if not new_user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with id = {user_id} does not exist"
+            )
+            
+        if data.email and data.email != new_user.email:
+            existing_user = db.query(User).filter(User.email == data.email).first()
+            if existing_user:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Email already registered"
+                )
+        
+        new_user.name = data.name
+        new_user.email = data.email
+        new_user.gender = data.gender
+        new_user.age = data.age
+        
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+    
+    @staticmethod
     def delete_user_by_id(user_id:int, db: Session):
         db_user = db.query(User).filter(User.id == user_id).first()
     
@@ -90,3 +116,14 @@ class UserController:
         
         db.delete(db_user)
         db.commit()
+        
+    @staticmethod
+    def search_user_by_name(user_name:str, db:Session):
+        query = db.query(User)
+        
+        if user_name:
+            query = query.filter(User.name.contains(user_name))
+            
+        users = query.all()
+        
+        return users

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum as SQLEnum
+from sqlalchemy.orm import relationship
 import enum
 from app.database import Base
 
@@ -13,3 +14,5 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     gender = Column(SQLEnum(GenderEnum), nullable=False)
     age = Column(Integer, nullable=False)
+    
+    tasks = relationship("Task", back_populates="owner")
