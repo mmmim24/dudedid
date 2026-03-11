@@ -6,11 +6,14 @@ from app.database import create_tables
 from app.routers import users,tasks
 from app.config import settings
 
-fastapi = FastAPI(title=settings.app_name)
+from contextlib import asynccontextmanager
 
-@fastapi.on_event("startup")
+
+@asynccontextmanager
 async def startup():
     create_tables()
+    
+fastapi = FastAPI(title=settings.app_name,lifespan=startup)
 
 fastapi.include_router(
     users.router,
