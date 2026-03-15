@@ -10,9 +10,10 @@ class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=True)
     email = Column(String, unique=True, index=True, nullable=False)
-    gender = Column(SQLEnum(GenderEnum), nullable=False)
-    age = Column(Integer, nullable=False)
+    password = Column(String, nullable=False)
+    gender = Column(SQLEnum(GenderEnum), nullable=True)
+    age = Column(Integer, nullable=True)
     
     tasks = relationship("Task", back_populates="owner")

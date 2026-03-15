@@ -3,7 +3,7 @@
 # uvicorn app.main:fastapi --reload
 from fastapi import FastAPI, status
 from app.database import create_tables
-from app.routers import users,tasks
+from app.routers import users,tasks,auth
 from app.config import settings
 
 from contextlib import asynccontextmanager
@@ -16,11 +16,9 @@ async def startup(app:FastAPI):
     
 fastapi = FastAPI(title=settings.app_name,lifespan=startup)
 
-fastapi.include_router(
-    users.router,
-    prefix=settings.api_prefix,
-    )
+fastapi.include_router(users.router,prefix=settings.api_prefix)
 fastapi.include_router(tasks.router,prefix=settings.api_prefix)
+fastapi.include_router(auth.router, prefix=settings.api_prefix)
 
 @fastapi.get("/", status_code=status.HTTP_200_OK)
 async def root():
