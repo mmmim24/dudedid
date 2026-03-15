@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     
     # Database
     database_url: str = "sqlite:///./dudedid.db"
+    dev_db: str = "sqlite:///./dev.db"
     
     # Security
     secret_key: str = "abcdef"

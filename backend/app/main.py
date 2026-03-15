@@ -10,8 +10,9 @@ from contextlib import asynccontextmanager
 
 
 @asynccontextmanager
-async def startup():
+async def startup(app:FastAPI):
     create_tables()
+    yield
     
 fastapi = FastAPI(title=settings.app_name,lifespan=startup)
 
