@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
+from app.utils.security import hash_password,verify_password
+from app.utils.security import create_access_token
 
 from app.models.users import User
 from app.schemas.users import Login, UserCreate
@@ -19,7 +21,7 @@ class AuthController:
         new_user = User(
             name=data.name,
             email=data.email,
-            password=data.password,
+            password=hash_password(data.password),
             gender=data.gender,
             age=data.age
         )
@@ -35,8 +37,15 @@ class AuthController:
             existing = db.query(User).filter(User.email == data.email).first()
             if not existing:
                 raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail="Email not found"
-                )
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User or password is invalid"
+            )
             else:
-                return {"token": "btt"}
+                if verify_password(data.password,existing.password):
+                    token = create_access_token({"email": existing.email})
+                    return {"token": token, "type": "bearer"}
+                else:           
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="User or password is invalid"
+                    )

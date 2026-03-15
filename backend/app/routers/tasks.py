@@ -6,10 +6,12 @@ from typing import List
 from app.database import connect_db
 from app.schemas.tasks import TaskResponse, TaskCreate, TaskUpdate
 from app.controllers.tasks import TaskController
+from app.utils.auth_dependency import get_current_user
 
 router = APIRouter(
     prefix='/tasks',
     tags=['tasks'],
+    dependencies=[Depends(get_current_user)],
     default_response_class=JSONResponse,
 )
 

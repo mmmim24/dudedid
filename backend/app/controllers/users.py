@@ -11,7 +11,6 @@ class UserController:
     def create_user(user: UserCreate, db: Session) -> UserResponse:
         if user.email:
             existing = db.query(User).filter(User.email == user.email).first()
-            
             if existing:
                 raise HTTPException(
                     status_code=status.HTTP_409_CONFLICT,

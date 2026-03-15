@@ -11,18 +11,22 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def startup(app:FastAPI):
-    create_tables()
-    yield
+    await create_tables()
+    try:
+        yield
+    except:
+        pass
     
 fastapi = FastAPI(title=settings.app_name,lifespan=startup)
+
+@fastapi.get("/", status_code=status.HTTP_200_OK)
+async def root():
+    return {"message": "Welcome to dudedid task management backend"}
 
 fastapi.include_router(users.router,prefix=settings.api_prefix)
 fastapi.include_router(tasks.router,prefix=settings.api_prefix)
 fastapi.include_router(auth.router, prefix=settings.api_prefix)
 
-@fastapi.get("/", status_code=status.HTTP_200_OK)
-async def root():
-    return {"message": "Welcome to dudedid task management backend"}
 
 # python3 ./main.py
 # if __name__ == "__main__":

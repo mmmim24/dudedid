@@ -19,6 +19,6 @@ def connect_db():
     finally:
         db.close()
         
-def create_tables():
+async def create_tables():
     from app.models import users,tasks
     Base.metadata.create_all(bind=engine)
