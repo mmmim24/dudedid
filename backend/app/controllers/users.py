@@ -46,7 +46,7 @@ class UserController:
         return user
     
     @staticmethod
-    def update_user_by_id(user_id:int, data:UserUpdate, db: Session):
+    def update_user_by_id(user_id:int, data:UserUpdate, db: Session) -> UserResponse:
         user = db.query(User).filter(User.id == user_id).first()
         
         if not user:

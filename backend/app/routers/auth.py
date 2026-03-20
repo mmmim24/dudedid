@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from app.database import connect_db
-from app.schemas.users import UserCreate,Login
+from app.schemas.users import UserResponse,UserCreate,Login
 from app.controllers.auth import AuthController
 from app.utils.security import verify_access_token
 
@@ -17,7 +17,7 @@ router = APIRouter(
 async def auth_check(token: str):
     return verify_access_token(token)
 
-@router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UserCreate)
+@router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UserResponse)
 async def sign_up(data: UserCreate, db: Session = Depends(connect_db)):
     user = AuthController.sign_up(data,db)
     return user
