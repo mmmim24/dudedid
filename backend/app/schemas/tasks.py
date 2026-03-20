@@ -3,7 +3,6 @@ from typing import Optional
 from app.models.tasks import PriorityEnum,StatusEnum
 from datetime import datetime
 class TaskCreate(BaseModel):
-    user_id: int
     title: str
     description: str
     priority: PriorityEnum
