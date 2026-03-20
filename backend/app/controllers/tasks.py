@@ -108,4 +108,17 @@ class TaskController:
         db.delete(task)
         db.commit()
         
+    @staticmethod
+    def delete_all_tasks(db: Session, current_user: dict):
+        user_id = int(current_user["sub"])
         
+        tasks = db.query(Task).filter(Task.user_id == user_id).all()
+        
+        if not tasks:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No tasks found"
+            )
+        
+        db.query(Task).filter(Task.user_id == user_id).delete()
+        db.commit()

@@ -38,3 +38,8 @@ async def update_task(id: int, data: TaskUpdate, db: Session = Depends(connect_d
 async def delete_task(id: int, db: Session = Depends(connect_db), current_user: dict = Depends(get_current_user)):
     TaskController.delete_task_by_id(id,db,current_user)
     return None
+
+@router.delete('/', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_all_tasks(db: Session = Depends(connect_db), current_user: dict = Depends(get_current_user)):
+    TaskController.delete_all_tasks(db,current_user)
+    return None

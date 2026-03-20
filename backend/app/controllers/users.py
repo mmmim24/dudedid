@@ -80,7 +80,7 @@ class UserController:
         return user
     
     @staticmethod
-    def replace_user_by_id(user_id:int, data:UserCreate, db: Session):
+    def replace_user_by_id(user_id:int, data:UserCreate, db: Session) -> UserResponse:
         new_user = db.query(User).filter(User.id==user_id).first()
         if not new_user:
             raise HTTPException(
@@ -113,14 +113,14 @@ class UserController:
         if not db_user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"User with id = {id} does not exist"
+                detail=f"User with id = {user_id} does not exist"
             )
         
         db.delete(db_user)
         db.commit()
         
     @staticmethod
-    def search_user_by_name(user_name:str, db:Session):
+    def search_user_by_name(user_name:str, db:Session) -> List[UserResponse]:
         query = db.query(User)
         
         if user_name:

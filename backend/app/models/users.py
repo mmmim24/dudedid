@@ -16,4 +16,4 @@ class User(Base):
     gender = Column(SQLEnum(GenderEnum), nullable=True)
     age = Column(Integer, nullable=True)
     
-    tasks = relationship("Task", back_populates="owner")
+    tasks = relationship("Task", back_populates="owner", cascade="all, delete-orphan")
