@@ -11,6 +11,7 @@ def test_create_user_success():
     payload: UserCreate = {
         "name": "Hasan",
         "email": "hasan@example.com",
+        "password": "Hasan123",
         "gender": "Male",
         "age": 25
     }
@@ -35,7 +36,8 @@ def test_create_user_success():
 def test_create_user_duplicate_email():
     payload: UserCreate = {
         "name": "Hasan",
-        "email": "hasan@example.com",  
+        "email": "hasan@example.com",
+        "password": "Hasan123",
         "gender": "Male",
         "age": 25
     }
