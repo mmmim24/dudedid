@@ -42,7 +42,7 @@ class AuthController:
             )
             else:
                 if verify_password(data.password,existing.password):
-                    token = create_access_token({"email": existing.email})
+                    token = create_access_token({"sub": str(existing.id)})
                     return {"token": token, "type": "bearer"}
                 else:           
                     raise HTTPException(
